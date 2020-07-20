@@ -1,8 +1,9 @@
 #ifndef BT_BEHAVIOR_DELEGATE
 #define BT_BEHAVIOR_DELEGATE
 
+#include "core/variant.h"
 #include "typedef.h"
-#include "variant.h"
+
 class BTNode;
 
 template<typename BEHAVIOR_NODE>
@@ -17,8 +18,7 @@ struct BehaviorDelegate : public BEHAVIOR_NODE
 
 template<typename BEHAVIOR_NODE>
 Variant BehaviorDelegate<BEHAVIOR_NODE>::script_call(StringName method, BehaviorTree::IndexType index, void* context) {
-	ERR_EXPLAIN("Context cannot be null");
-	ERR_FAIL_NULL_V( context, BehaviorTree::BH_ERROR );
+	ERR_FAIL_NULL_V_MSG( context, BehaviorTree::BH_ERROR, "Context cannot be null" );
 	Variant v(BehaviorTree::BH_SUCCESS);
 	ScriptInstance* script = node.get_script_instance();
 	if (script && script->has_method(method)) {
@@ -33,8 +33,7 @@ Variant BehaviorDelegate<BEHAVIOR_NODE>::script_call(StringName method, Behavior
 
 template<typename BEHAVIOR_NODE>
 Variant BehaviorDelegate<BEHAVIOR_NODE>::script_call(StringName method, BehaviorTree::IndexType index, void* context, BehaviorTree::E_State child_state) {
-	ERR_EXPLAIN("Context cannot be null");
-	ERR_FAIL_NULL_V( context, BehaviorTree::BH_ERROR );
+	ERR_FAIL_NULL_V_MSG( context, BehaviorTree::BH_ERROR, "Context cannot be null" );
 	Variant v(static_cast<int>(child_state));
 	ScriptInstance* script = node.get_script_instance();
 	if (script && script->has_method(method)) {
@@ -48,4 +47,4 @@ Variant BehaviorDelegate<BEHAVIOR_NODE>::script_call(StringName method, Behavior
 	return v;
 }
 
-#endif
+#endif // BT_BEHAVIOR_DELEGATE

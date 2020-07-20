@@ -6,7 +6,7 @@
 
 class BTCustomParallelNode : public BTCompositeNode
 {
-	OBJ_TYPE(BTCustomParallelNode, BTCompositeNode);
+	GDCLASS(BTCustomParallelNode, BTCompositeNode);
 
 	struct Delegate : public BehaviorDelegate<BehaviorTree::Composite>
 	{
@@ -30,4 +30,4 @@ protected:
 	static void _bind_methods();
 };
 
-#endif
+#endif // BT_CUSTOM_PARALLEL_NODE_H

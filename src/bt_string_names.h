@@ -1,12 +1,12 @@
 #ifndef BT_STRING_NAMES_H
 #define BT_STRING_NAMES_H
 
-#include "string_db.h"
+#include "core/string_name.h"
 
 class BTStringNames {
 
-friend void register_behaviortree_types();
-friend void unregister_behaviortree_types();
+	friend void register_gd_behavior_tree_types();
+	friend void unregister_gd_behavior_tree_types();
 
 	static BTStringNames* singleton;
 
@@ -29,4 +29,4 @@ public:
 
 };
 
-#endif
+#endif // BT_STRING_NAMES_H

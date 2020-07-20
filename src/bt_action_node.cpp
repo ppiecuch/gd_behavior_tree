@@ -14,18 +14,15 @@ void BTActionNode::_bind_methods() {
 }
 
 void BTActionNode::add_child_node(BTNode& , Vector<BehaviorTree::Node*>& ) {
-	ERR_EXPLAIN("Action node doesn't allow to have any child.");
-	ERR_FAIL();
+	ERR_FAIL_MSG("Action node doesn't allow to have any child.");
 }
 
 void BTActionNode::remove_child_node(BTNode& , Vector<BehaviorTree::Node*>& ) {
-	//ERR_EXPLAIN("Action node doesn't allow to have any child.");
-	//ERR_FAIL();
+	//
 }
 
 void BTActionNode::move_child_node(BTNode&, Vector<BehaviorTree::Node*>& ) {
-	//ERR_EXPLAIN("Action node doesn't allow to have any child.");
-	//ERR_FAIL();
+	//
 }
 
 void BTActionNode::Delegate::restore_running(BehaviorTree::VirtualMachine& vm, BehaviorTree::IndexType index, void* context, BehaviorTree::VMRunningData& running_data) {
@@ -40,8 +37,7 @@ void BTActionNode::Delegate::prepare(BehaviorTree::VirtualMachine& vm, BehaviorT
 
 BehaviorTree::E_State BTActionNode::Delegate::update(BehaviorTree::IndexType index, void* context, BehaviorTree::VMRunningData&) {
 	Variant result_state = script_call(BTStringNames::get_singleton()->_update, index, context);
-	ERR_EXPLAIN("Variant type is not int.");
-	ERR_FAIL_COND_V( result_state.get_type() != Variant::INT, BehaviorTree::BH_ERROR );
+	ERR_FAIL_COND_V_MSG( result_state.get_type() != Variant::INT, BehaviorTree::BH_ERROR, "Variant type is not int." );
 	return static_cast<BehaviorTree::E_State>(static_cast<int>(result_state));
 }
 

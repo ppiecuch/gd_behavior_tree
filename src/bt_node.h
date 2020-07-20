@@ -6,7 +6,7 @@
 
 class BTNode : public Node
 {
-	OBJ_TYPE(BTNode, Node);
+	GDCLASS(BTNode, Node);
 
 public:
 	virtual BehaviorTree::Node* get_behavior_node() = 0;
@@ -21,7 +21,7 @@ protected:
 private:
 	virtual void add_child_notify(Node *p_child) override;
 	virtual void remove_child_notify(Node *p_child) override;
-	virtual void move_child_notify(Node *p_child, int pos) override;
+	virtual void move_child_notify(Node *p_child) override;
 
 };
 

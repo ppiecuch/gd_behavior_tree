@@ -15,11 +15,9 @@ void BTDecoratorNode::_bind_methods() {
 }
 
 void BTDecoratorNode::add_child_node(BTNode& child, Vector<BehaviorTree::Node*>& node_hierarchy) {
-	BTNode* p_parent = get_parent() ? get_parent()->cast_to<BTNode>() : NULL;
-	ERR_EXPLAIN("Parent node is not a BTNode.");
-	ERR_FAIL_NULL(p_parent);
-	ERR_EXPLAIN("Decorator node only allowed one child.");
-	ERR_FAIL_COND(get_child_count() > 1);
+	BTNode* p_parent = get_parent() ? Object::cast_to<BTNode>(get_parent()) : NULL;
+	ERR_FAIL_NULL_MSG(p_parent, "Parent node is not a BTNode.");
+	ERR_FAIL_COND_MSG(get_child_count() > 1, "Decorator node only allowed one child.");
 	if (p_parent && get_child_count() <= 1) {
 		node_hierarchy.push_back(get_behavior_node());
 		p_parent->add_child_node(child, node_hierarchy);
@@ -27,9 +25,7 @@ void BTDecoratorNode::add_child_node(BTNode& child, Vector<BehaviorTree::Node*>&
 }
 
 void BTDecoratorNode::remove_child_node(BTNode& child, Vector<BehaviorTree::Node*>& node_hierarchy) {
-	BTNode* p_parent = get_parent() ? get_parent()->cast_to<BTNode>() : NULL;
-	//ERR_EXPLAIN("Parent node is not a BTNode.");
-	//ERR_FAIL_NULL(p_parent);
+	BTNode* p_parent = get_parent() ? Object::cast_to<BTNode>(get_parent()) : NULL;
 	if (p_parent) {
 		node_hierarchy.push_back(get_behavior_node());
 		p_parent->remove_child_node(child, node_hierarchy);
@@ -37,11 +33,9 @@ void BTDecoratorNode::remove_child_node(BTNode& child, Vector<BehaviorTree::Node
 }
 
 void BTDecoratorNode::move_child_node(BTNode& child, Vector<BehaviorTree::Node*>& node_hierarchy) {
-	BTNode* p_parent = get_parent() ? get_parent()->cast_to<BTNode>() : NULL;
-	ERR_EXPLAIN("Parent node is not a BTNode.");
-	ERR_FAIL_NULL(p_parent);
-	ERR_EXPLAIN("Decorator node only allowed one child.");
-	ERR_FAIL_COND(get_child_count() > 1);
+	BTNode* p_parent = get_parent() ? Object::cast_to<BTNode>(get_parent()) : NULL;
+	ERR_FAIL_NULL_MSG(p_parent, "Parent node is not a BTNode.");
+	ERR_FAIL_COND_MSG(get_child_count() > 1, "Decorator node only allowed one child.");
 	if (p_parent && get_child_count() <= 1) {
 		node_hierarchy.push_back(get_behavior_node());
 		p_parent->move_child_node(child, node_hierarchy);
@@ -68,8 +62,7 @@ void BTDecoratorNode::Delegate::prepare(
 
 BehaviorTree::E_State BTDecoratorNode::Delegate::pre_update(BehaviorTree::IndexType index, void* context, BehaviorTree::VMRunningData&) {
 	Variant result_state = script_call(BTStringNames::get_singleton()->_pre_update, index, context);
-	ERR_EXPLAIN("Variant type is not int.");
-	ERR_FAIL_COND_V( result_state.get_type() != Variant::INT, BehaviorTree::BH_ERROR );
+	ERR_FAIL_COND_V_MSG( result_state.get_type() != Variant::INT, BehaviorTree::BH_ERROR, "Variant type is not int." );
 	return static_cast<BehaviorTree::E_State>(static_cast<int>(result_state));
 }
 
@@ -79,8 +72,7 @@ BehaviorTree::E_State BTDecoratorNode::Delegate::post_update(
 		BehaviorTree::E_State child_state,
 		BehaviorTree::VMRunningData&) {
 	Variant result_state = script_call(BTStringNames::get_singleton()->_post_update, index, context, child_state);
-	ERR_EXPLAIN("Variant type is not int.");
-	ERR_FAIL_COND_V( result_state.get_type() != Variant::INT, BehaviorTree::BH_ERROR );
+	ERR_FAIL_COND_V_MSG( result_state.get_type() != Variant::INT, BehaviorTree::BH_ERROR, "Variant type is not int." );
 	return static_cast<BehaviorTree::E_State>(static_cast<int>(result_state));
 }
 

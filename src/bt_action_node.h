@@ -6,7 +6,7 @@
 
 class BTActionNode : public BTNode
 {
-	OBJ_TYPE(BTActionNode, BTNode);
+	GDCLASS(BTActionNode, BTNode);
 
 	virtual void add_child_node(BTNode& child, Vector<BehaviorTree::Node*>& node_hierarchy) override;
 	virtual void remove_child_node(BTNode& child, Vector<BehaviorTree::Node*>& node_hierarchy) override;

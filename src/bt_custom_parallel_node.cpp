@@ -30,8 +30,7 @@ BehaviorTree::E_State BTCustomParallelNode::Delegate::child_update(
 		BehaviorTree::E_State child_state,
 	BehaviorTree::VMRunningData&) {
 	Variant result_state = script_call(BTStringNames::get_singleton()->_child_update, index, context, child_state);
-	ERR_EXPLAIN("Variant type is not int.");
-	ERR_FAIL_COND_V( result_state.get_type() != Variant::INT, BehaviorTree::BH_ERROR );
+	ERR_FAIL_COND_V_MSG( result_state.get_type() != Variant::INT, BehaviorTree::BH_ERROR, "Variant type is not int." );
 	return static_cast<BehaviorTree::E_State>(static_cast<int>(result_state));
 }
 

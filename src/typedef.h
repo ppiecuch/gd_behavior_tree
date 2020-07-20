@@ -45,7 +45,7 @@ template<typename T>
 class BTVector : public Vector<T>
 {
 public:
-	T &	  back()	   { return Vector<T>::operator[](Vector<T>::size()-1); }
+	T &	  back()	   { return Vector<T>::ref(Vector<T>::size()-1); }
 	T const& back() const { return Vector<T>::operator[](Vector<T>::size()-1); }
 
 	void pop_back() { Vector<T>::resize(Vector<T>::size()-1); }

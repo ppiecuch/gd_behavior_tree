@@ -12,7 +12,7 @@ static void create_structure_impl(BTStructure& structure_data, NodeList& node_li
 	NodeData& current_node_data = structure_data.back();
 	int children_count = node.get_child_count();
 	for (int i = 0; i < children_count; ++i) {
-		BTNode* p_bt_node = node.get_child(i)->cast_to<BTNode>();
+		BTNode* p_bt_node = Object::cast_to<BTNode>(node.get_child(i));
 		if (p_bt_node)
 			create_structure_impl(structure_data, node_list, *p_bt_node, index);
 	}

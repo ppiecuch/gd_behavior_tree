@@ -5,7 +5,7 @@
 
 class BTRootNode : public BTDecoratorNode
 {
-	OBJ_TYPE(BTRootNode, BTDecoratorNode);
+	GDCLASS(BTRootNode, BTDecoratorNode);
 
 	BehaviorTree::BTStructure bt_structure_data;
 	BehaviorTree::NodeList bt_node_list;
