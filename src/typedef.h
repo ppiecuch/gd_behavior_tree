@@ -33,8 +33,8 @@ const IndexType INDEX_TYPE_MAX = 0xffff;
 struct NodeData
 {
 	union {
-	IndexType begin;
-	IndexType index;
+		IndexType begin;
+		IndexType index;
 	};
 	IndexType end;
 };
@@ -45,13 +45,16 @@ template<typename T>
 class BTVector : public Vector<T>
 {
 public:
-	T &	  back()	   { return Vector<T>::ref(Vector<T>::size()-1); }
-	T const& back() const { return Vector<T>::operator[](Vector<T>::size()-1); }
+	T &back() { return Vector<T>::ref(Vector<T>::size() - 1); }
+	T const &back() const { return Vector<T>::last(); }
 
-	void pop_back() { Vector<T>::resize(Vector<T>::size()-1); }
+	void pop_back() { Vector<T>::resize(Vector<T>::size() - 1); }
 
 	void swap(BTVector& other) { other = *this; Vector<T>::clear(); }
 };
+#if (__GNUC__ <= 4) && !defined(__clang__) && !defined(_MSC_VER)
+#pragma GCC diagnostic pop
+#endif
 
 template<typename COMPARATOR, typename T>
 void sort(BTVector<T>& vector) { vector.template sort_custom<COMPARATOR>(); }

@@ -37,6 +37,11 @@ void VirtualMachine::step(void* context, VMRunningData& running_data) {
 	cancel_skipped_behaviors(context, running_data);
 }
 
+// Silent gcc4 warnings (false-positive?)
+#if (__GNUC__ <= 4) && !defined(__clang__) && !defined(_MSC_VER)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wstrict-overflow"
+#endif
 void VirtualMachine::run_composites(E_State state, void* context, VMRunningData& running_data) {
 	while (!running_data.running_nodes.empty()) {
 		VMRunningData::RunningNode running_node = running_data.running_nodes.back();
@@ -53,6 +58,9 @@ void VirtualMachine::run_composites(E_State state, void* context, VMRunningData&
 		}
 	}
 }
+#if (__GNUC__ <= 4) && !defined(__clang__) && !defined(_MSC_VER)
+#pragma GCC diagnostic pop
+#endif
 
 E_State VirtualMachine::run_action(Node& node, void* context, VMRunningData& running_data) {
 	IndexType running_node_index = running_data.index_marker;
@@ -114,9 +122,17 @@ bool VMRunningData::is_current_node_running_on_last_tick() const {
 	return !last_tick_running.empty() && index_marker == last_tick_running.back();
 }
 
+// Silent gcc4 warnings (false-positive?)
+#if (__GNUC__ <= 4) && !defined(__clang__) && !defined(_MSC_VER)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wstrict-overflow"
+#endif
 void VMRunningData::pop_last_running_behavior() {
 	last_tick_running.pop_back();
 }
+#if (__GNUC__ <= 4) && !defined(__clang__) && !defined(_MSC_VER)
+#pragma GCC diagnostic pop
+#endif
 
 void VMRunningData::add_running_node(Node* node, NodeData node_data) {
 	BT_ASSERT(node != NULL);
