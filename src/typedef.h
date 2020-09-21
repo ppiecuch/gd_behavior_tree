@@ -6,9 +6,6 @@
 #include "core/vector.h"
 #define BT_STATIC_ASSERT(x, y)
 #define BT_ASSERT(x)
-#ifndef override
-#define override
-#endif
 
 #else
 
